@@ -103,6 +103,42 @@ module.exports = {
         });
 
     },
+	
+	/**
+	 *  DESTROY action
+	 */
+    destroy: function(req, res, next) {
+
+        var id = req.param('id');
+
+        if (!id) {
+            return res.badRequest('No id provided.');
+        }
+		
+		console.log('user',User.findOne(id))
+
+        User.findOne(id,function(err, result) {
+			
+            if (err) return res.serverError(err);
+
+            if (!result) return res.notFound();
+
+            User.destroy(id, function(err) {
+
+                if (err) return next(err);
+
+                return res.json(result);
+            });
+
+        });
+    },
+
+
+    /**
+     * Overrides for the settings in `config/controllers.js`
+     * (specific to SleepController)
+     */
+    _config: {}
 
 	
 };
