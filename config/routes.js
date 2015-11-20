@@ -49,6 +49,7 @@ module.exports.routes = {
 
 
   // CRUD Rest Routes for User
+  'get/user/:id?': 'UserController.find',
   'post /user': 'UserController.create'
 
 };
