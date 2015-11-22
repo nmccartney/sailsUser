@@ -110,12 +110,35 @@ module.exports = {
             if (user.length === 0) return res.notFound();
 
             if (err) return next(err);
-
-            res.json(user);
+			
+			console.log('editing',user);
+			
+			res.redirect( '/user');
 
         });
 
     },
+	
+	/**
+	 * EDIT action
+	 */
+	
+	edit: function(req, res, next){
+		var id = req.param('id');
+
+        if (!id) {
+            return res.badRequest('No id provided.');
+        }
+		
+		User.findOne(id,function(err, result) {
+			
+            if (err) return res.serverError(err);
+
+            if (!result) return res.notFound();
+
+			res.view('user/edit',{user:result})
+        });
+	},
 	
 	/**
 	 *  DESTROY action
