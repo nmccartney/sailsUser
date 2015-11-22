@@ -1,0 +1,14 @@
+{
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {},
+  "name": "sailsUsers",
+  "version": "0.0.0",
+  "author": "nmcCartney",
+  "private": true
+}
