@@ -1,7 +1,27 @@
 <div class="container">
 	<div class="row">
 		<div class="col-xs-12">
+			
 			<div class="h1">Users</div>
+			
+			<hr/>
+			
+			<form class="form-inline" action="/user" method="POST">
+				<div class="form-group">
+					<label class="sr-only" for="exampleInputEmail3">Email address</label>
+					<input type="email" class="form-control" name="username" id="exampleInputEmail3" placeholder="Email">
+				</div>
+				<div class="form-group">
+					<label class="sr-only" for="exampleInputFirst3">First Name</label>
+					<input class="form-control" id="exampleInputFirst3" name="first_name" type="text" placeholder="First Name">
+				</div>
+				<div class="form-group">
+					<label class="sr-only" for="exampleInputLast3">Last Name</label>
+					<input class="form-control" id="exampleInputLast3" name="last_name"  type="text" placeholder="Last Name">
+				</div>
+				<button type="submit" class="btn btn-success"  value="ADD">Add</button>
+			</form>
+			
 			<hr/>
 			
 			<div class="table-responsive">
@@ -13,6 +33,7 @@
 							<th>first name</th>
 							<th>last name</th>
 							<th>added</th>
+							<th>action</th>
 						</tr>
 					</thead>
 					<tbody></tbody>
@@ -23,6 +44,10 @@
 						<td>{{first_name}}</td> 
 						<td>{{last_name}}</td>
 						<td>{{createdAt}}</td>
+						<td>
+							<a href="#" class="btn btn-primary">edit</a>
+							<a href="/user/delete/{{id}}" class="btn btn-danger">delete</a>
+						</td>
 					</tr>
 					{{/each}}
 				</table>

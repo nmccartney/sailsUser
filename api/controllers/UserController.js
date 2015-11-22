@@ -19,7 +19,8 @@ module.exports = {
 			
 			res.status(201);
 			
-			res.json(user);
+			// res.json(user);
+			res.redirect('/user');
 		});
 	},
 	/**
@@ -139,7 +140,8 @@ module.exports = {
 
                 if (err) return next(err);
 
-                return res.json(result);
+                // return res.json(result);
+				res.redirect('/user');
             });
 
         });
