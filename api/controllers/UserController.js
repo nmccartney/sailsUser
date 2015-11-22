@@ -27,6 +27,9 @@ module.exports = {
 	 */
 	find: function(req, res, next){
 		
+		console.log('json - : ', req.wantsJSON);
+		console.log('json res - : ', res.wantsJSON);
+		
 		var id = req.param('id');
 		
 		var idShortCut = isShortcut(id);
@@ -39,7 +42,14 @@ module.exports = {
 				
 				if(err) return next(err);
 				
-				res.json(user);
+				// res.json(user);
+				// console.log('json: ', req.wantsJSON());
+				
+				if (req.wantsJSON) {
+					res.json(user);
+				} else {
+					res.redirect('/user');
+				}
 			});
 		} else{
 			
@@ -63,8 +73,10 @@ module.exports = {
                 if (user === undefined) return res.notFound();
 
                 if (err) return next(err);
-
-                res.json(user);
+					
+				// console.log(req.is('json'))	
+                // res.json(user);
+				res.view('user',{user:user})
 
             });
 			
@@ -136,7 +148,7 @@ module.exports = {
 
     /**
      * Overrides for the settings in `config/controllers.js`
-     * (specific to SleepController)
+     * (specific to UserController)
      */
     _config: {}
 
