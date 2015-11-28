@@ -14,7 +14,7 @@
 				UserList.add(event)
 				break;
 			case 'updated':
-				UserList.updated();
+				UserList.update();
 				break;
 			case 'destroyed':
 				UserList.delete(event.id);
@@ -33,13 +33,13 @@
 			
 			var um = '<tr id="user-'+user.data.id+'">';
 			um += '<td ><div class="badge badge-info">'+user.data.id+'</div></td>';
-			um +=  '<td>'+user.data.username+'</td>';
-			um +=  '<td>'+user.data.first_name+'</td>';
-			um +=  '<td>'+user.data.last_name+'</td>';
+			um += '<td>'+user.data.username+'</td>';
+			um += '<td>'+user.data.first_name+'</td>';
+			um += '<td>'+user.data.last_name+'</td>';
 			um += '<td>'+user.data.createdAt+'</td>';
 			um += '<td><a href="/user/edit/'+user.data.id+'" class="btn btn-primary">edit</a>';
 			um += '<a href="/user/delete/'+user.data.id+'" class="btn btn-danger">delete</a></td>';
-			um +=  '</tr>';
+			um += '</tr>';
 			console.log('adding : ',um);
 			$('.table tbody').append(um);
 		},
