@@ -6,7 +6,9 @@
     "test",
     "tests"
   ],
-  "dependencies": {},
+  "dependencies": {
+    "bootstrap-sass": "~3.3.6"
+  },
   "name": "sailsUsers",
   "version": "0.0.0",
   "author": "nmcCartney",
