@@ -51,7 +51,7 @@ module.exports.routes = {
   // CRUD Rest Routes for User
   'get /user/:id?': 'UserController.find',
   'post /user': 'UserController.create',
-  'get /edit': 'UserController.edit',
+  'get /user/edit': 'UserController.edit',
   'put /user/update/:id?': 'UserController.update',
   'get /user/delete/:id?': 'UserController.destroy'
 

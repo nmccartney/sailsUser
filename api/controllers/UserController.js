@@ -19,6 +19,8 @@ module.exports = {
 			
 			res.status(201);
 			
+			User.publishCreate( user);
+			
 			// res.json(user);
 			res.redirect('/user');
 		});
@@ -28,27 +30,31 @@ module.exports = {
 	 */
 	find: function(req, res, next){
 		
-		console.log('json - : ', req.wantsJSON);
-		console.log('json res - : ', res.wantsJSON);
-		
 		var id = req.param('id');
 		
 		var idShortCut = isShortcut(id);
 		
-		if(idShortCut === true){
+		console.log('------------');
+		
+		console.log(id,idShortCut);
+		
+		console.log('------------');
+		
+		if(id){
 			
 			User.findOne(id, function(err, user) {
 				
 				if(user === undefined) return res.notFound();
 				
 				if(err) return next(err);
-				
-				// res.json(user);
-				// console.log('json: ', req.wantsJSON());
-				
+	
 				if (req.wantsJSON) {
+					console.log('return json', user)
+					
 					res.json(user);
 				} else {
+					User.subscribe(req.socket, user);
+					
 					res.redirect('/user');
 				}
 			});
@@ -67,17 +73,24 @@ module.exports = {
 				where: where || undefined
 			}
 			
-			console.log('this is the options : ', options);
+			// console.log('this is the options : ', options);
 			
 			User.find(options, function(err, user) {
 
                 if (user === undefined) return res.notFound();
 
                 if (err) return next(err);
-					
-				// console.log(req.is('json'))	
-                // res.json(user);
-				res.view('user',{user:user})
+				
+				if(req.isSocket){
+					User.watch(req);
+					User.subscribe(req.socket,user);
+				}
+				
+				if (req.wantsJSON) {
+					res.json(user);
+				} else {
+					res.view('user',{user:user})
+				}
 
             });
 			
@@ -113,6 +126,8 @@ module.exports = {
 			
 			console.log('editing',user);
 			
+			User.publishUpdate(user[0].id, user);
+			
 			res.redirect( '/user');
 
         });
@@ -135,6 +150,8 @@ module.exports = {
             if (err) return res.serverError(err);
 
             if (!result) return res.notFound();
+			
+			User.subscribe(req.socket, result);
 
 			res.view('user/edit',{user:result})
         });
@@ -162,6 +179,8 @@ module.exports = {
             User.destroy(id, function(err) {
 
                 if (err) return next(err);
+				
+				User.publishDestroy(result.id,req);
 
                 // return res.json(result);
 				res.redirect('/user');
