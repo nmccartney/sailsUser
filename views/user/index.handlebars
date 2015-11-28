@@ -36,20 +36,21 @@
 							<th>action</th>
 						</tr>
 					</thead>
-					<tbody></tbody>
-					{{#each user}}
-					<tr id="user-{{id}}">
-						<td><div class="badge badge-info">{{id}}</div></td>
-						<td>{{username}}</td> 
-						<td>{{first_name}}</td> 
-						<td>{{last_name}}</td>
-						<td>{{createdAt}}</td>
-						<td>
-							<a href="/user/edit/{{id}}" class="btn btn-primary">edit</a>
-							<a href="/user/delete/{{id}}" class="btn btn-danger">delete</a>
-						</td>
-					</tr>
-					{{/each}}
+					<tbody>
+						{{#each user}}
+						<tr id="user-{{id}}">
+							<td><div class="badge badge-info">{{id}}</div></td>
+							<td>{{username}}</td> 
+							<td>{{first_name}}</td> 
+							<td>{{last_name}}</td>
+							<td>{{createdAt}}</td>
+							<td>
+								<a href="/user/edit/{{id}}" class="btn btn-primary">edit</a>
+								<a href="/user/delete/{{id}}" class="btn btn-danger">delete</a>
+							</td>
+						</tr>
+						{{/each}}
+					</tbody>
 				</table>
 			</div>
 			
