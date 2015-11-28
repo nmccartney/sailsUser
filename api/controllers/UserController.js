@@ -47,14 +47,14 @@ module.exports = {
 				if(user === undefined) return res.notFound();
 				
 				if(err) return next(err);
+				
+				if(req.isSocket){
+					User.subscribe(req.socket,user);
+				}
 	
 				if (req.wantsJSON) {
-					console.log('return json', user)
-					
 					res.json(user);
 				} else {
-					User.subscribe(req.socket, user);
-					
 					res.redirect('/user');
 				}
 			});
@@ -167,8 +167,6 @@ module.exports = {
         if (!id) {
             return res.badRequest('No id provided.');
         }
-		
-		console.log('user',User.findOne(id))
 
         User.findOne(id,function(err, result) {
 			
