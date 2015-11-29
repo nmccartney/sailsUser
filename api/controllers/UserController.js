@@ -34,12 +34,6 @@ module.exports = {
 		
 		var idShortCut = isShortcut(id);
 		
-		console.log('------------');
-		
-		console.log(id,idShortCut);
-		
-		console.log('------------');
-		
 		if(id){
 			
 			User.findOne(id, function(err, user) {
@@ -72,8 +66,6 @@ module.exports = {
 				sort: req.param('sort') || undefined,
 				where: where || undefined
 			}
-			
-			// console.log('this is the options : ', options);
 			
 			User.find(options, function(err, user) {
 
