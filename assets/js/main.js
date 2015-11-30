@@ -34,7 +34,7 @@
 			io.socket.get("/user/"+user.data.id, function (response) { });
 			// create user template
 			var um = '<tr id="user-'+user.data.id+'">';
-			um += this.new(user);
+			um += this.new(user.data);
 			um += '</tr>';
 			console.log('adding : ',um);
 			// add to table

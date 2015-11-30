@@ -8,6 +8,19 @@
 module.exports = {
 
   attributes: {
+    username:{
+      type:'email',
+      required:true,
+      unique:true
+    },
+    first_name:{
+      type:'string',
+      maxLenght:28
+    },
+    last_name:{
+      type:'string',
+      maxLenght:28
+    }
 
   }
 };
