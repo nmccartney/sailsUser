@@ -3,7 +3,21 @@
 		<div class="col-xs-6">
 			
 			<h1>Edit User</h1>
+			
 			<hr/>
+			
+			<!--VALIDATION ALERTS-->
+			{{#if flash.err.Errors}}
+				{{#each flash.err.Errors.username}}
+					<div class="alert alert-danger">{{message}}</div>
+				{{/each}}
+				{{#each flash.err.Errors.first_name}}
+					<div class="alert alert-danger">{{message}}</div>
+				{{/each}}
+				{{#each flash.err.Errors.last_name}}
+					<div class="alert alert-danger">{{message}}</div>
+				{{/each}}
+			{{/if}}
 			
 			<form class="form-" action="/user/update/{{user.id}}" method="PUT">
 				<div class="form-group">

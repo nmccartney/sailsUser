@@ -7,6 +7,12 @@
 
 module.exports = {
 	
+    /**
+     * Overrides for the settings in `config/controllers.js`
+     * (specific to UserController)
+     */
+    _config: {},
+	
 	/**
 	 * CREATE action
 	 */
@@ -15,7 +21,15 @@ module.exports = {
 		var params = req.params.all();
 		
 		User.create(params,function(err,user){
-			if(err)return next(err);
+			
+			if(err){
+				req.session.flash = {err:err};
+				res.locals.flash = _.clone(req.session.flash);
+				return res.redirect('user');
+			}
+			
+			// if(err)return res.redirect('/user',err);;
+			
 			
 			res.status(201);
 			
@@ -25,6 +39,101 @@ module.exports = {
 			res.redirect('/user');
 		});
 	},
+	
+	/**
+	 * UPDATE action
+	 */
+	update: function(req, res, next) {
+
+        var criteria = {};
+
+        criteria = _.merge({}, req.params.all(), req.body);
+
+        var id = req.param('id');
+
+        if (!id) {
+            return res.badRequest('No id provided.');
+        }
+
+        User.update(id, criteria, function(err, user) {
+
+			// if (err) return next(err);
+			if(err){
+				req.session.flash = {err:err};
+				res.locals.flash = _.clone(req.session.flash);
+				return res.redirect('user/edit/'+id);
+			}
+
+            if (user.length === 0) return res.notFound();
+			
+			console.log('editing',user);
+			
+			User.publishUpdate(user[0].id, user);
+			
+			res.redirect( '/user');
+
+        });
+
+    },
+	
+	/**
+	 * EDIT action
+	 */
+	
+	edit: function(req, res, next){
+		var id = req.param('id');
+
+        if (!id) {
+            return res.badRequest('No id provided.');
+        }
+		
+		User.findOne(id,function(err, result) {
+			
+            if (err) return res.serverError(err);
+
+            if (!result) return res.notFound();
+			
+			User.subscribe(req.socket, result);
+			
+			// localize session messages
+			res.locals.flash = _.clone(req.session.flash);
+
+			res.view('user/edit', { user:result });
+			
+			// clear session messages
+			res.locals.flash =  req.session.flash = {};
+        });
+	},
+	
+	/**
+	 *  DESTROY action
+	 */
+    destroy: function(req, res, next) {
+
+        var id = req.param('id');
+
+        if (!id) {
+            return res.badRequest('No id provided.');
+        }
+
+        User.findOne(id,function(err, result) {
+			
+            if (err) return res.serverError(err);
+
+            if (!result) return res.notFound();
+
+            User.destroy(id, function(err) {
+
+                if (err) return next(err);
+				
+				User.publishDestroy(result.id,req);
+
+                // return res.json(result);
+				res.redirect('/user');
+            });
+
+        });
+    },
 	/**
 	 * FIND action
 	 */
@@ -81,7 +190,9 @@ module.exports = {
 				if (req.wantsJSON) {
 					res.json(user);
 				} else {
-					res.view('user',{user:user})
+					res.locals.flash = _.clone(req.session.flash);
+					res.view('user',{user:user});
+					res.locals.flash =  req.session.flash = {}
 				}
 
             });
@@ -93,99 +204,7 @@ module.exports = {
                 return true;
             }
         }
-	},
-	
-	/**
-	 * UPDATE action
-	 */
-	update: function(req, res, next) {
-
-        var criteria = {};
-
-        criteria = _.merge({}, req.params.all(), req.body);
-
-        var id = req.param('id');
-
-        if (!id) {
-            return res.badRequest('No id provided.');
-        }
-
-        User.update(id, criteria, function(err, user) {
-
-            if (user.length === 0) return res.notFound();
-
-            if (err) return next(err);
-			
-			console.log('editing',user);
-			
-			User.publishUpdate(user[0].id, user);
-			
-			res.redirect( '/user');
-
-        });
-
-    },
-	
-	/**
-	 * EDIT action
-	 */
-	
-	edit: function(req, res, next){
-		var id = req.param('id');
-
-        if (!id) {
-            return res.badRequest('No id provided.');
-        }
-		
-		User.findOne(id,function(err, result) {
-			
-            if (err) return res.serverError(err);
-
-            if (!result) return res.notFound();
-			
-			User.subscribe(req.socket, result);
-
-			res.view('user/edit',{user:result})
-        });
-	},
-	
-	/**
-	 *  DESTROY action
-	 */
-    destroy: function(req, res, next) {
-
-        var id = req.param('id');
-
-        if (!id) {
-            return res.badRequest('No id provided.');
-        }
-
-        User.findOne(id,function(err, result) {
-			
-            if (err) return res.serverError(err);
-
-            if (!result) return res.notFound();
-
-            User.destroy(id, function(err) {
-
-                if (err) return next(err);
-				
-				User.publishDestroy(result.id,req);
-
-                // return res.json(result);
-				res.redirect('/user');
-            });
-
-        });
-    },
-
-
-    /**
-     * Overrides for the settings in `config/controllers.js`
-     * (specific to UserController)
-     */
-    _config: {}
-
+	}
 	
 };
 
