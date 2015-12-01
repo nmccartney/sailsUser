@@ -2,6 +2,9 @@
 
 a [Sails](http://sailsjs.org) application
 
+###Demo
+
+http://192.241.247.80/user
 
 ###Dependencies
 
