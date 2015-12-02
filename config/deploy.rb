@@ -1,14 +1,14 @@
 # config valid only for Capistrano 3.1
-lock '3.1.0'
+lock '3.4.0'
 
-set :application, 'my_app_name'
-set :repo_url, 'git@example.com:me/my_repo.git'
+set :application, 'sailsUser'
+set :repo_url, 'https://github.com/nmccartney/sailsUser'
 
 # Default branch is :master
 # ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }
 
 # Default deploy_to directory is /var/www/my_app
-# set :deploy_to, '/var/www/my_app'
+set :deploy_to, '/opt'
 
 # Default value for :scm is :git
 # set :scm, :git
@@ -32,7 +32,7 @@ set :repo_url, 'git@example.com:me/my_repo.git'
 # set :default_env, { path: "/opt/ruby/bin:$PATH" }
 
 # Default value for keep_releases is 5
-# set :keep_releases, 5
+set :keep_releases, 3
 
 namespace :deploy do
 

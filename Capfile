@@ -21,15 +21,10 @@ require 'capistrano/deploy'
 # require 'capistrano/rails/assets'
 # require 'capistrano/rails/migrations'
 
+require 'capistrano/npm'
+
+
 # Loads custom tasks from `lib/capistrano/tasks' if you have any defined.
 Dir.glob('lib/capistrano/tasks/*.cap').each { |r| import r }
 
 
-require 'capistrano/npm'
-
-
-
-set :npm_target_path, -> { release_path.join('subdir') } # default not set
-set :npm_flags, '--production --silent --no-spin' # default
-set :npm_roles, :all                              # default
-set :npm_env_variables, {}
