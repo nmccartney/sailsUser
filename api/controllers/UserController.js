@@ -28,9 +28,6 @@ module.exports = {
 				return res.redirect('user');
 			}
 			
-			// if(err)return res.redirect('/user',err);;
-			
-			
 			res.status(201);
 			
 			User.publishCreate( user);
