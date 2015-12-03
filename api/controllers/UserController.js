@@ -138,8 +138,6 @@ module.exports = {
 		
 		var id = req.param('id');
 		
-		var idShortCut = isShortcut(id);
-		
 		if(id){
 			
 			User.findOne(id, function(err, user) {
@@ -196,11 +194,6 @@ module.exports = {
 			
 		}
 		
-		function isShortcut(id) {
-            if (id === 'find' || id === 'update' || id === 'create' || id === 'destroy') {
-                return true;
-            }
-        }
 	}
 	
 };
