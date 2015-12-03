@@ -55,3 +55,4 @@ set :npm_target_path, -> { release_path.join('/opt/current') } # default not set
 # set :npm_flags, '--production --silent --no-spin' # default
 # set :npm_roles, :all                              # default
 # set :npm_env_variables, {NODE_ENV: "production", PORT:80}
+

@@ -56,3 +56,52 @@ namespace :deploy do
   end
 
 end
+
+
+# before 'deploy', 'node:stop'
+# after 'deploy', 'node:start'
+
+namespace :node do
+  desc "Start node App"
+  task :start, :roles => :app do
+    puts "**** -STARTING APP- ****"
+    run "cd #{current_path}/ && forever start app.js --prod"
+  end
+  task :stop, :roles => :app do
+    puts "**** -STOPING node APP- ****"
+    run "cd #{current_path}/ && forever stop app.js"
+  end
+end
+
+# namespace :npm do
+#   task :update, :roles => :app do
+#     puts "**** -UPDATING SOCKET APP- ****"
+#     run "cd #{current_path}/ && npm update"
+#   end
+#   task :install, :roles => :app do
+#     puts "**** -LISTING SOCKET APPS- ****"
+#     run "cd #{current_path}/ && npm install"
+#   end
+#   task :list, :roles => :app do
+#     puts "**** -LISTING SOCKET APPS- ****"
+#     run "cd #{current_path}/nodejs_app/ && npm list"
+#   end
+# end
+
+# namespace :bower do
+#   task :install, :roles => :app do
+#     puts "**** -bower install- ****"
+#     run "cd #{current_path}/ && bower install --allow-root"
+#   end
+#   task :list, :roles => :app do
+#     puts "**** -bower list- ****"
+#     run "cd #{current_path}/ && bower list"
+#   end
+# end
+
+# namespace :grunt do
+#   task :build, :roles => :app do
+#     puts "**** -grunt build- ****"
+#     run "cd #{current_path}/ && grunt build"
+#   end
+# end
