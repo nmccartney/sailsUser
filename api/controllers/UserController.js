@@ -30,6 +30,7 @@ module.exports = {
 			
 			res.status(201);
 			
+			// socket
 			User.publishCreate( user);
 			
 			// res.json(user);
@@ -86,9 +87,9 @@ module.exports = {
 		
 		User.findOne(id,function(err, result) {
 			
-            if (err) return res.serverError(err);
+      if (err) return res.serverError(err);
 
-            if (!result) return res.notFound();
+      if (!result) return res.notFound();
 			
 			User.subscribe(req.socket, result);
 			
@@ -99,7 +100,8 @@ module.exports = {
 			
 			// clear session messages
 			res.locals.flash =  req.session.flash = {};
-        });
+
+    });		
 	},
 	
 	/**
