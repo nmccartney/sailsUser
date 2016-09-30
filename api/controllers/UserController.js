@@ -139,6 +139,8 @@ module.exports = {
 	find: function(req, res, next){
 		
 		var id = req.param('id');
+
+
 		
 		if(id){
 			
@@ -183,16 +185,20 @@ module.exports = {
 					User.watch(req);
 					User.subscribe(req.socket,user);
 				}
+
+				sails.log.info('wants json : ' +req.wantsJSON);
 				
 				if (req.wantsJSON) {
+					sails.log.info('gets json : ' +req.wantsJSON);
 					res.json(user);
 				} else {
+					sails.log.info('gets html : ' +req.wantsJSON);
 					res.locals.flash = _.clone(req.session.flash);
 					res.view('user',{user:user});
 					res.locals.flash =  req.session.flash = {}
 				}
 
-            });
+      });
 			
 		}
 		
