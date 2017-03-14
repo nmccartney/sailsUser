@@ -37,5 +37,9 @@
     "url": "git://github.com/nmcCartney/sailsUsers.git"
   },
   "author": "nmcCartney",
-  "license": ""
+  "license": "",
+  "devDependencies": {
+    "sails": "^0.11.5",
+    "shipit-deploy": "^2.4.0"
+  }
 }
